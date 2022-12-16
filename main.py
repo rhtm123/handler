@@ -4,10 +4,50 @@ from flask import request
 import string
 import random
 import subprocess
+import requests as req
 
 app = Flask(__name__)
 
 CORS(app, support_credentials=True)
+
+address = "http://64.227.148.75:5000/"
+
+
+@app.route("/ssl/save-code",  methods = ['GET','POST'])
+@cross_origin(supports_credentials=True)
+def save_code_ssl():
+    if request.method=="POST":
+        request_data = request.get_json()
+        code = request_data['code'].strip()
+        container_name = request_data['container_name'].strip();
+        url = address + "save-code"
+        myobj = {"container_name":container_name,"code":code}
+        resp = req.post(url, json = myobj)
+        return resp.txt
+
+
+
+@app.route("/ssl/create-new-container")
+@cross_origin(supports_credentials=True)
+def create_new_container_ssl():
+    request_data = request.args
+    image_name = request_data['image_name']
+    url = address + f"create-new-container?image_name={image_name}"
+    resp = req.get(url)
+    return resp.text
+
+
+@app.route("/ssl/delete-container")
+@cross_origin(supports_credentials=True)
+def delete_container_ssl():
+    request_data = request.args
+    container_name = request_data['container_name'].strip();
+    url = address + f"delete-container?container_name={container_name}"
+    resp = req.get(url)
+    return resp.text
+
+
+
 
 @app.route('/')
 def home():
