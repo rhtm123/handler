@@ -13,7 +13,7 @@ CORS(app, support_credentials=True)
 address = "http://64.227.148.75:5000/"
 
 
-@app.route("/ssl/save-code",  methods = ['GET','POST'])
+@app.route("/ssl/save-code",  methods = ['POST'])
 @cross_origin(supports_credentials=True)
 def save_code_ssl():
     if request.method=="POST":
@@ -23,8 +23,7 @@ def save_code_ssl():
         url = address + "save-code"
         myobj = {"container_name":container_name,"code":code}
         resp = req.post(url, json = myobj)
-        return resp.txt
-
+        return resp.text
 
 
 @app.route("/ssl/create-new-container")
