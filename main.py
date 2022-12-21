@@ -4,7 +4,6 @@ from flask import request
 import string
 import random
 import subprocess
-import requests as req
 
 app = Flask(__name__)
 
@@ -28,7 +27,7 @@ def save_code():
             f.write(code)
 
         with open("tmp/output.txt", "w") as output:
-            subprocess.run(f"sudo docker cp code/main.py {container_name}:/home/main.py", shell=True, stdout=output, stderr=output)
+            subprocess.run(f"sudo docker cp code/main.py {container_name}:/src/main.py", shell=True, stdout=output, stderr=output)
 
         with open("tmp/output.txt", "r") as file:
             val = file.read()
