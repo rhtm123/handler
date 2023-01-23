@@ -51,7 +51,7 @@ def create_new_container():
             subprocess.run(f"sudo docker run --name {container_name} hello-world", shell=True, stdout=output, stderr=output)
     else: 
         with open("tmp/output.txt", "w") as output:
-            subprocess.run(f"sudo docker run -d --name {container_name} --expose 80 --net nginx-proxy -e VIRTUAL_HOST={container_name}.codingchaska.school {image_name}", shell=True, stdout=output, stderr=output) 
+            subprocess.run(f"sudo docker run -d --name {container_name} --expose 80 --net nginx-proxy -e VIRTUAL_HOST={container_name}.thelearningsetu.com {image_name}", shell=True, stdout=output, stderr=output) 
     with open("tmp/output.txt", "r") as file:
         val = file.read()
     d = {"success":True,'container_name':container_name, "response":val}
