@@ -1,3 +1,2 @@
-Unable to find image 'terminal-image:latest' locally
-docker: Error response from daemon: pull access denied for terminal-image, repository does not exist or may require 'docker login': denied: requested access to the resource is denied.
-See 'docker run --help'.
+'sudo' is not recognized as an internal or external command,
+operable program or batch file.
