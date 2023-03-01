@@ -95,9 +95,9 @@ def get_data(data):
     code = data['code'].strip()
     container_name = data['container_name'].strip();
     file_name = data['file_name'].strip();
-    # print(code)
-    # print(container_name)
-    # print(file_name)
+    print(code)
+    print(container_name)
+    print(file_name)
     with open("code/main.py", "w") as f:
         f.write(code)
 
@@ -110,7 +110,7 @@ def get_data(data):
     # val = "fdaf"
     d = {"success":True, "container_name":container_name, "response":val}
     # return jsonify(d)
-    emit("data",d)
+    emit("data",jsonify(d))
 
 @socketio.on("connect")
 def connect():
