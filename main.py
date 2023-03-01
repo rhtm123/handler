@@ -98,16 +98,16 @@ def get_data(data):
     print(code)
     print(container_name)
     print(file_name)
-    with open("code/main.py", "w") as f:
-        f.write(code)
+    # with open("code/main.py", "w") as f:
+    #     f.write(code)
 
-    with open("tmp/output.txt", "w") as output:
-        subprocess.run(f"sudo docker cp code/main.py {container_name}:{file_name}", shell=True, stdout=output, stderr=output)
+    # with open("tmp/output.txt", "w") as output:
+    #     subprocess.run(f"sudo docker cp code/main.py {container_name}:{file_name}", shell=True, stdout=output, stderr=output)
 
-    with open("tmp/output.txt", "r") as file:
-        val = file.read()
+    # with open("tmp/output.txt", "r") as file:
+    #     val = file.read()
 
-    # val = "fdaf"
+    val = "fdaf"
     d = {"success":True, "container_name":container_name, "response":val}
     # return jsonify(d)
     emit("data",jsonify(d))
