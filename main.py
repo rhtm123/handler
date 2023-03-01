@@ -5,9 +5,15 @@ import string
 import random
 import subprocess
 
+from flask_socketio import SocketIO, emit
+
 app = Flask(__name__)
 
 CORS(app, support_credentials=True)
+
+app.config['SECRET_KEY'] = 'secret!'
+socketio = SocketIO(app)
+socketio.init_app(app, cors_allowed_origins="*")
 
 
 @app.route('/')
@@ -83,6 +89,42 @@ def show_containers():
 
     return jsonify(d)
 
+@socketio.on("data")
+def get_data(data):
+    # print(data)
+    code = data['code'].strip()
+    container_name = data['container_name'].strip();
+    file_name = data['file_name'].strip();
+    # print(code)
+    # print(container_name)
+    # print(file_name)
+    with open("code/main.py", "w") as f:
+        f.write(code)
+
+    with open("tmp/output.txt", "w") as output:
+        subprocess.run(f"sudo docker cp code/main.py {container_name}:{file_name}", shell=True, stdout=output, stderr=output)
+
+    with open("tmp/output.txt", "r") as file:
+        val = file.read()
+
+    # val = "fdaf"
+    d = {"success":True, "container_name":container_name, "response":val}
+    # return jsonify(d)
+    emit("data",d)
+
+@socketio.on("connect")
+def connect():
+    """new client connected"""
+    print("new client connected")
+    
+@socketio.on("disconnect")
+def disconnected():
+    """event listener when client disconnects to the server"""
+    print("user disconnected")
+    emit("disconnect",f"user disconnected",broadcast=True)
+ 
+
+
 # main driver function
 if __name__ == '__main__':
-    app.run(debug=True)
+    socketio.run(app, debug=True)
