@@ -30,7 +30,6 @@ def save_code():
         container_name = request_data['container_name'].strip();
         file_name = request_data['file_name'].strip();
 
-
         with open("code/main.py", "w") as f:
             f.write(code)
 
